@@ -38,7 +38,7 @@ From the **sql** folder execute **create-table.sql** and **populate-table.sql**.
 ### Node App
 
 ```
-git clone git@github.com:RobertCooney99/chalkboard-phonebook.git
+git clone https://github.com/RobertCooney99/chalkboard-phonebook.git
 cd chalkboard-phonebook
 npm i
 npm start
