@@ -100,8 +100,25 @@ app.get('/contacts', verifyAPIToken, (req, res) => {
         query_details.sort_method = 'ASC';
     }
 
+    // Initialise the pagination section of SQL query to empty string
+    // If no page number is passed with the request this remains empty
+    var page_sql = '';
+    if (query_details.page) {
+        if (!query_details.display_limit) {
+            // No display limit (contacts per page) has been passed
+            // Set to default of 2 contacts
+            query_details.display_limit = 2;
+        }
+
+        // Calculate offset for use in SQL query
+        var offset = (query_details.page - 1) * (query_details.display_limit);
+        
+        // Build pagination SQL query
+        page_sql = ' LIMIT ' + mysql.escape(query_details.display_limit) + ' OFFSET ' + mysql.escape(offset);
+    }
+
     // Build query string to order the contacts table
-    var contacts_query = 'SELECT * FROM contacts ORDER BY ' + query_details.sort_attribute + ' ' + query_details.sort_method;
+    var contacts_query = 'SELECT * FROM contacts ORDER BY ' + query_details.sort_attribute + ' ' + query_details.sort_method + page_sql;
 
     mysqlConnection.query(contacts_query, (err, rows, fields) => {
         if (!err) {
