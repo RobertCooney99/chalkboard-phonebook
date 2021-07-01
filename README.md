@@ -1,6 +1,22 @@
 # chalkboard-phonebook: Coding Challenge
 
-A phonebook API built using JavaScript/Node with a MySQL Database. The API uses JSONWebTokens for authorisation purposes so that only requests with a valid API token are accepted.
+A phonebook API built using JavaScript/Node with a MySQL Database. The API uses JSONWebTokens for authorisation purposes so that only requests with a valid API token are accepted. Express was used as a framework.
+
+I chose to use MySQL mainly because it is highly scalable, and it is likely that in a full implementation of a phonebook there would be large amounts of data to store in a relational database. Also, as the functionality of a phonebook revolves around being able to "look-up" people/numbers/locations etc... it is important that the database provides high performance.
+
+Due to the time constraints of the challenge there are many features missing from the API which would have been added if I had more time. Firstly, input validation is missing in a lot of the endpoints. Also, I would have implemented the option to search for contacts with specific attributes (**e.g.** first name = "Alan"). Another feature that I would have added is the ability to update only certain attributes of a contact, as it stands any values that aren't passed into the update request are treated as NULL and overwrite the existing values. Lastly, I would have added more tests to the API. Throughout the implementation I used Postman to test the API endpoints with varius test-cases, however, I didn't have the time to include tests for all possible cases. These tests would cover authorised and unauthorised API requests, validation of user inputs and the responses of database queries.
+
+# Contact Details
+
+**Robert Cooney**
+
+robertcooney99@gmail.com
+
+https://github.com/RobertCooney99
+
+
+
+## Phonebook Features
 
 Contacts in the phonebook have the following properties;
 
@@ -13,7 +29,7 @@ Contacts in the phonebook have the following properties;
 - Email address
 - Mailing address
 
-## Phonebook Features
+--------------------
 
 - Sort contacts by any contact property
 - Sort in ascending/descending order
