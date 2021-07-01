@@ -43,7 +43,7 @@ app.post('/contacts/login', (req, res) => {
     if (login_details.username == "Admin" && login_details.password == "password") {
         // The correct login details have been added
         // Create a JWT API Token using the account username, password and API secret key
-        // Can set an expiry time of 2 hours by including {expiresIn: '2h'}
+        // Can set an expiry time of 2 hours by including {expiresIn: '2h'} as a parameter
         jwt.sign({username: login_details.username, password: login_details.password}, api_secret_key, (err, token) => {
             if (!err) {
                 res.json({
@@ -58,3 +58,26 @@ app.post('/contacts/login', (req, res) => {
         res.send("Incorrect login...");
     }
 });
+
+// Function to verify the API token
+// Used as middleware to authorise requests made to the API
+function verifyAPIToken(req, res, next) {
+    const api_token = req.headers['token'];
+
+    if (typeof api_token == 'undefined') {
+        // No API token has been passed in the request header
+        res.send("No authorisation token passed...");
+    } else {
+        // Check if the API token passed with the request is valid
+        jwt.verify(api_token, api_secret_key, (err) => {
+            if (err) {
+                // API token is invalid
+                res.send("Unable to authorise...");
+            } else {
+                // API token is valid
+                // Continue with request
+                next();
+            }
+        });
+    }
+}
