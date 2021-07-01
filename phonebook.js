@@ -188,15 +188,22 @@ app.delete('/contacts/delete/:id', verifyAPIToken, (req, res) => {
     // Get contact_id of the contact to be deleted
     var contact_id = req.params.id;
 
-    // Initialise DELETE query string with blank id value
-    var delete_query = 'DELETE FROM contacts WHERE contact_id = ?';
-    mysqlConnection.query(delete_query, [contact_id], (err, rows, fields) => {
-        if (!err) {
-            // Contact successfully deleted
-            res.send("Contact deleted...");
-        } else {
-            // Query failed, log error message
-            console.log(err);
-        }
-    });
+    // Check the entered ID is an integer numeric value
+    let is_id_num = /^\d+$/.test(contact_id);
+    if (is_id_num) {
+        // ID is numeric value
+        // Initialise DELETE query string with blank id value
+        var delete_query = 'DELETE FROM contacts WHERE contact_id = ?';
+        mysqlConnection.query(delete_query, [contact_id], (err, rows, fields) => {
+            if (!err) {
+                // Contact successfully deleted
+                res.send("Contact deleted...");
+            } else {
+                // Query failed, log error message
+                console.log(err);
+            }
+        });
+    } else {
+        res.send("ID must be in integer format...");
+    }
 });
