@@ -81,3 +81,19 @@ function verifyAPIToken(req, res, next) {
         });
     }
 }
+
+// Route to display the phonebook contacts
+// Contacts will only be displayed if API token is valid
+app.get('/contacts', verifyAPIToken, (req, res) => {
+    var contacts_query = "SELECT * FROM contacts"
+
+    mysqlConnection.query(contacts_query, (err, rows, fields) => {
+        if (!err) {
+            // Query was successful, return the rows
+            res.send(rows);
+        } else {
+            // Query failed, log error message
+            console.log(err);
+        }
+    });
+});
