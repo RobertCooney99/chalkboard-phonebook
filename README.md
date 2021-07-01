@@ -60,6 +60,8 @@ Optional to pass in;
 
 - **page**: Page number to display
 - **display_limit**: Number of contacts per page
+- **sort_attribute**: Attribute to sort the contacts by (default - contact ID)
+- **sort_method**: ASC or DESC (default - ASC)
 
 ### POST /contacts/:id
 
