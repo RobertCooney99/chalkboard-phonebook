@@ -44,6 +44,29 @@ npm i
 npm start
 ```
 
+### Testing
+
+In **chalkboard-phonebook**:
+
+```
+npm i --save-dev
+npm test
+```
+
+### Tests
+
+**1:** Test if sending the correct admin details to **/contacts/login** correctly returns an API token.
+
+**2:** Test if API returns all contacts on **/contacts** (given a valid API token)
+
+**3:** Test if API returns one contact on **/contacts/:id** (given a valid API token)
+
+**4:** Test if API returns no contacts when an unknown ID is entered on **/contacts/:id** (given a valid API token)
+
+**5:** Test if sending the incorrect admin details to **/contacts/login** correctly returns no API token
+
+**6:** Test if the API refuses to return contacts when no API token is passed to **/contacts**
+
 ## API Documentation: Endpoints
 
 ### POST /contacts/login
