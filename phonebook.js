@@ -32,7 +32,13 @@ mysqlConnection.connect((err) => {
 
 // Begin listening for requests on port 8080
 const port = process.env.PORT || 8080;
-app.listen(port, () => console.log(`App listening on port: ${port}...`));
+var server = app.listen(port, () => console.log(`App listening on port: ${port}...`));
+
+// Module exports
+module.exports = {
+    mysqlConnection,
+    server
+}
 
 // Route to login to API
 // In this application there is only one account
