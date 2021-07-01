@@ -85,7 +85,23 @@ function verifyAPIToken(req, res, next) {
 // Route to display the phonebook contacts
 // Contacts will only be displayed if API token is valid
 app.get('/contacts', verifyAPIToken, (req, res) => {
-    var contacts_query = "SELECT * FROM contacts"
+    let query_details = req.body;
+
+    if (!query_details.sort_attribute) {
+        // If no attribute has been passed to sort by then set to default: contact_id
+        query_details.sort_attribute = 'contact_id';
+    } else {
+        // Escape user entered sorting attribute
+        query_details.sort_attribute = mysql.escapeId(query_details.sort_attribute);
+    }
+
+    // If the inputted sorting method is neither DESC or ASC then set to default ASC
+    if (query_details.sort_method != 'DESC' && query_details.sort_method != 'ASC') {
+        query_details.sort_method = 'ASC';
+    }
+
+    // Build query string to order the contacts table
+    var contacts_query = 'SELECT * FROM contacts ORDER BY ' + query_details.sort_attribute + ' ' + query_details.sort_method;
 
     mysqlConnection.query(contacts_query, (err, rows, fields) => {
         if (!err) {
