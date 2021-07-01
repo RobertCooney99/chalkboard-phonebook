@@ -32,6 +32,8 @@ The database was set up using MySQL Server and MySQL Workbench. A database calle
 - **Username:** root
 - **password:** password
 
+From the **sql** folder execute **create-table.sql** and **populate-table.sql**.
+
 ### Node App
 
 ```
