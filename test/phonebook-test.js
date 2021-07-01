@@ -19,7 +19,7 @@ describe('Phonebook API', () => {
         const drop_contacts = fs.readFileSync(path.join(__dirname, '../sql/drop-table.sql')).toString();
         connection.query(drop_contacts, (err, rows, fields) => {
             if (!err) {
-                //console.log("Table dropeed");
+                //console.log("Table dropped");
                 const create_contacts = fs.readFileSync(path.join(__dirname, '../sql/create-table.sql')).toString();
                 connection.query(create_contacts, (err, rows, fields) => {
                     if (!err) {
@@ -52,12 +52,12 @@ describe('Phonebook API', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.token.should.exist;
+                    done();
                     //console.log(res.body.token);
                 });
-            done();
         });
 
-        it("Should allow Admin to view contacts list", (done) => {
+        it("Should authorise Admin to view contacts list (6 contacts)", (done) => {
             chai.request(server)
                 .post('/contacts/login')
                 .send({'username': 'Admin', 'password': 'password'})
@@ -65,16 +65,57 @@ describe('Phonebook API', () => {
                     res.should.have.status(200);
                     res.body.token.should.exist;
                     var api_token = res.body.token;
-                    console.log(api_token);
+                    //console.log(api_token);
                     chai.request(server)
                         .get('/contacts')
                         .set({'token': api_token})
                         .end((error, resp) => {
                             resp.should.have.status(200);
-                            //console.log(resp.body);
+                            resp.body.length.should.be.eq(6);
+                            done();
+                            //console.log(resp.body.length);
                         });
                 });
-            done();
+        });
+
+        it("Should authorise admin to view one contact", (done) => {
+            chai.request(server)
+                .post('/contacts/login')
+                .send({'username': 'Admin', 'password': 'password'})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.token.should.exist;
+                    var api_token = res.body.token;
+                    //console.log(api_token);
+                    chai.request(server)
+                        .get('/contacts/2')
+                        .set({'token': api_token})
+                        .end((error, resp) => {
+                            resp.should.have.status(200);
+                            resp.body[0].contact_id.should.be.eq(2);
+                            done();
+                        });
+                });
+        });
+
+        it("Should authorise admin and return nothing as contact does not exist", (done) => {
+            chai.request(server)
+                .post('/contacts/login')
+                .send({'username': 'Admin', 'password': 'password'})
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.token.should.exist;
+                    var api_token = res.body.token;
+                    //console.log(api_token);
+                    chai.request(server)
+                        .get('/contacts/100')
+                        .set({'token': api_token})
+                        .end((error, resp) => {
+                            resp.should.have.status(200);
+                            resp.body.should.deep.equal([]);
+                            done();
+                        });
+                });
         });
 
     });
