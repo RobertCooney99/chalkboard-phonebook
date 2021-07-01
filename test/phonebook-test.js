@@ -1,16 +1,47 @@
-let server = require('../phonebook.js');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
+const phonebook = require('../phonebook.js');
+const server = phonebook.server;
+const connection = phonebook.mysqlConnection;
 const { should } = require('chai');
+const path = require('path');
+const fs = require('fs');
+const { create } = require('domain');
 
 chai.should();
 chai.use(chaiHttp);
 
+
 describe('Phonebook API', () => {
 
-    /*beforeEach(function() {
-        console.log("BEFORE EACH");
-    });*/
+    beforeEach(function(done) {
+        //Reset the database before each test
+        const drop_contacts = fs.readFileSync(path.join(__dirname, '../sql/drop-table.sql')).toString();
+        connection.query(drop_contacts, (err, rows, fields) => {
+            if (!err) {
+                //console.log("Table dropeed");
+                const create_contacts = fs.readFileSync(path.join(__dirname, '../sql/create-table.sql')).toString();
+                connection.query(create_contacts, (err, rows, fields) => {
+                    if (!err) {
+                        //console.log("Table created");
+                        const populate_contacts = fs.readFileSync(path.join(__dirname, '../sql/populate-table.sql')).toString();
+                        connection.query(populate_contacts, (err, rows, fields) => {
+                            if (!err) {
+                                //console.log("Table populated");
+                                done();
+                            } else {
+                                console.log(err);
+                            }
+                        });
+                    } else {
+                        console.log(err);
+                    }
+                });
+            } else {
+                console.log(err);
+            }
+        });
+    });
 
     describe("Testing using correct token login details", () => {
 
@@ -41,18 +72,10 @@ describe('Phonebook API', () => {
                         .end((error, resp) => {
                             resp.should.have.status(200);
                             //console.log(resp.body);
-                            done();
                         });
                 });
+            done();
         });
 
     });
-
-    /*describe("Testing using incorrect token login details", () => {
-
-    });
-
-    describe("Testing with no token passed", () => {
-
-    });*/
 });
