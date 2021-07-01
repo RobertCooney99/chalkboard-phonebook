@@ -4,9 +4,24 @@ A phonebook API built using JavaScript/Node with a MySQL Database. The API uses 
 
 Contacts in the phonebook have the following properties;
 
-First name, last name, work phone, home phone, mobile phone, other phone, email address and mailing address.
+- First name
+- Last name
+- Work phone
+- Home phone
+- Mobile phone
+- Other phone
+- Email address
+- Mailing address
 
-All contacts in the phonebook can be displayed or they can be displayed in pages with a dynamic page display limit. Contacts can be sorted by any of their properties in either ascending or descending order. Contacts can be created, deleted and updated.
+## Phonebook Features
+
+- Sort contacts by any contact property
+- Sort in ascending/descending order
+- View contacts in pages (dynamic page display limit)
+- Create contact
+- Update contact (by contact ID)
+- Delete contact (by contact ID)
+
 
 ## Setting up the Chalkboard Phonebook
 
@@ -25,3 +40,5 @@ cd chalkboard-phonebook
 npm i
 npm start
 ```
+
+## API Documentation
