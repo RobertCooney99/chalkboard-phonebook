@@ -120,6 +120,7 @@ app.get('/contacts', verifyAPIToken, (req, res) => {
     // Build query string to order the contacts table
     var contacts_query = 'SELECT * FROM contacts ORDER BY ' + query_details.sort_attribute + ' ' + query_details.sort_method + page_sql;
 
+    // Execute SELECT query
     mysqlConnection.query(contacts_query, (err, rows, fields) => {
         if (!err) {
             // Query was successful, return the rows
@@ -129,4 +130,29 @@ app.get('/contacts', verifyAPIToken, (req, res) => {
             console.log(err);
         }
     });
+});
+
+// Route to create a contact in the phonebook
+// The request will only be accepted if the API token is valid
+// Missing values are treated as NULL
+app.post('/contacts/create', verifyAPIToken, (req, res) => {
+    let contact = req.body;
+
+    // Create the INSERT query for the new contact with blank values
+    var insert_query = 'INSERT INTO contacts(first_name, last_name, work_phone, home_phone, mobile_phone, other_phone, email, mailing_address)' +
+    ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+
+    // Execute INSERT query
+    mysqlConnection.query(insert_query,
+        [contact.first_name, contact.last_name, contact.work_phone, contact.home_phone, contact.mobile_phone,
+        contact.other_phone, contact.email, contact.mailing_address],
+        (err, rows, fields) => {
+            if (!err) {
+                // Contact successfully added to database
+                res.send("Contact added to the phonebook...");
+            } else {
+                // Query failed, log error message
+                console.log(err);
+            }
+        });
 });
