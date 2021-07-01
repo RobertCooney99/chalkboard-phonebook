@@ -3,6 +3,7 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const { query } = require('express');
 const jwt = require('jsonwebtoken');
+const e = require('express');
 
 // Secret key for API
 // In production this would be kept hidden and secure
@@ -136,6 +137,30 @@ app.get('/contacts', verifyAPIToken, (req, res) => {
             console.log(err);
         }
     });
+});
+
+// Route to view one contact in the phonebook
+app.get('/contacts/:id', verifyAPIToken, (req, res) => {
+    var contact_id = req.params.id;
+
+    // Check the entered ID is an integer numeric value
+    if (is_val_num(contact_id)) {
+        // ID is a numeric value
+        // Initialise SELECT query string with blank ID value
+        var contact_query = "SELECT * FROM contacts WHERE contact_id = ?";
+        // Execute SELECT query
+        mysqlConnection.query(contact_query, [contact_id], (err, rows, fields) => {
+            if (!err) {
+                // Contact successfully retrieved from database
+                res.send(rows);
+            } else {
+                // Query failed, log error message
+                console.log(err);
+            }
+        });
+    } else {
+        res.send("ID must be in integer format...");
+    }
 });
 
 // Route to create a contact in the phonebook
