@@ -1,6 +1,6 @@
 # chalkboard-phonebook: Coding Challenge
 
-A phonebook API built using JavaScript/Node with a MySQL Database. The API uses JSONWebTokens for authorisation purposes so that only requests with a valid API token are accepted. Express was used as a framework.
+A phonebook API built using JavaScript/Node with a MySQL Database. The API uses JSONWebTokens for authorisation purposes so that only requests with a valid API token are accepted, the JWT package was used as data transmissions can be signed. Express was used as a framework.
 
 I chose to use MySQL mainly because it is highly scalable, and it is likely that in a full implementation of a phonebook there would be large amounts of data to store in a relational database. Also, as the functionality of a phonebook revolves around being able to "look-up" people/numbers/locations etc... it is important that the database provides high performance.
 
