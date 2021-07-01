@@ -156,3 +156,47 @@ app.post('/contacts/create', verifyAPIToken, (req, res) => {
             }
         });
 });
+
+// Route to update a contact in the phonebook by contact_id
+// The request will only be accepted if the API token is valid
+app.post('/contacts/update/:id', verifyAPIToken, (req, res) => {
+    let contact = req.body;
+
+    // Get contact_id of the contact to be updated
+    var contact_id = req.params.id;
+
+    // Set query string for the UPDATE query with blank values
+    var update_query = 'UPDATE contacts SET first_name = ?, last_name = ?, work_phone = ?, ' +
+    'home_phone = ?, mobile_phone = ?, other_phone = ?, email = ?, mailing_address = ? WHERE contact_id = ?';
+
+    // Execute UPDATE query using request values
+    mysqlConnection.query(update_query, [contact.first_name, contact.last_name, contact.work_phone, contact.home_phone, contact.mobile_phone,
+        contact.other_phone, contact.email, contact.mailing_address, contact_id],
+        (err, rows, fields) => {
+            if (!err) {
+                // Contact successfully updated
+                res.send("Contact updated...");
+            } else {
+                // Query failed, log error message
+                console.log(err);
+            }
+        });
+});
+
+// Route to delete a contact by contact_id
+app.delete('/contacts/delete/:id', verifyAPIToken, (req, res) => {
+    // Get contact_id of the contact to be deleted
+    var contact_id = req.params.id;
+
+    // Initialise DELETE query string with blank id value
+    var delete_query = 'DELETE FROM contacts WHERE contact_id = ?';
+    mysqlConnection.query(delete_query, [contact_id], (err, rows, fields) => {
+        if (!err) {
+            // Contact successfully deleted
+            res.send("Contact deleted...");
+        } else {
+            // Query failed, log error message
+            console.log(err);
+        }
+    });
+});
