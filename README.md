@@ -70,7 +70,7 @@ Add a contact to the database.
 
 - **token** must be passed in the request header.
 
-Optional to pass in;
+Optional to pass in contact details in the format;
 
 - **field_name**: field_value
 
@@ -82,7 +82,7 @@ Update a specific contact by contact ID.
 
 - **token** must be passed in the request header.
 
-Optional to pass in;
+Optional to pass in contact details in the format;
 
 - **field_name**: field_value
 
