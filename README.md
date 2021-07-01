@@ -21,7 +21,7 @@ Contacts in the phonebook have the following properties;
 - Create contact
 - Update contact (by contact ID)
 - Delete contact (by contact ID)
-
+- Some validation of user inputs
 
 ## Setting up the Chalkboard Phonebook
 
