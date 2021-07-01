@@ -41,4 +41,59 @@ npm i
 npm start
 ```
 
-## API Documentation
+## API Documentation: Endpoints
+
+### POST /contacts/login
+
+**username** and **password** must be sent. If the user details are correct then an API token is returned.
+
+### GET /contacts
+
+Display contacts in the phonebook.
+
+- **token** must be passed in the request header.
+
+Optional to pass in;
+
+- **page**: Page number to display
+- **display_limit**: Number of contacts per page
+
+### POST /contacts/:id
+
+Display just one contact.
+
+- **token** must be passed in the request header.
+
+### POST /contacts/create
+
+Add a contact to the database.
+
+- **token** must be passed in the request header.
+
+Optional to pass in;
+
+- **field_name**: field_value
+
+Any field name's not present in the request are treated as **NULL** values.
+
+### POST /contacts/update/:id
+
+Update a specific contact by contact ID.
+
+- **token** must be passed in the request header.
+
+Optional to pass in;
+
+- **field_name**: field_value
+
+Any field name's not present in the request are treated as **NULL** values and will be overwritten.
+
+### DELETE /contacts/delete/:id
+
+Delete a specific contact by contact ID.
+
+- **token** must be passed in the request header.
+
+
+
+
