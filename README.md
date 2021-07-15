@@ -1,4 +1,4 @@
-# chalkboard-phonebook: Coding Challenge
+# Phonebook API: Coding Challenge (3h time-limit)
 
 A phonebook API built using JavaScript/Node with a MySQL Database. The API uses JSONWebTokens for authorisation purposes so that only requests with a valid API token are accepted, the JWT package was used as data transmissions can be signed. Express was used as a framework.
 
