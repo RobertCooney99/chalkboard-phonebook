@@ -40,7 +40,7 @@ Contacts in the phonebook have the following properties;
 - Some validation of user inputs
 - API token and authorisation for the admin account
 
-## Setting up the Chalkboard Phonebook
+## Setting up the Phonebook
 
 ### Database
 
@@ -54,15 +54,15 @@ From the **sql** folder execute **create-table.sql** and **populate-table.sql**.
 ### Node App
 
 ```
-git clone https://github.com/RobertCooney99/chalkboard-phonebook.git
-cd chalkboard-phonebook
+git clone https://github.com/RobertCooney99/phonebook-api-challenge.git
+cd phonebook-api-challenge
 npm i
 npm start
 ```
 
 ### Testing
 
-In **chalkboard-phonebook**:
+In **phonebook-api-challenge**:
 
 ```
 npm i --save-dev
